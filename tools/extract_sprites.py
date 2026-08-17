@@ -3,10 +3,12 @@
 每个 16x16 图块 -> 16 行字符串，每行 16 字符，字符为调色板索引或 '.' (透明)。
 """
 from PIL import Image
-import json, sys
+import json, sys, os
 
-S0 = Image.open('../ref/bc_0.png').convert('RGBA')  # 16x16 tiles, 16 cols x 18 rows
-S1 = Image.open('../ref/bc_1.png').convert('RGBA')  # 8x8 tiles, 6 cols x 2 rows
+HERE = os.path.dirname(os.path.abspath(__file__))
+
+S0 = Image.open(os.path.join(HERE, '..', 'ref', 'bc_0.png')).convert('RGBA')  # 16x16 tiles, 16 cols x 18 rows
+S1 = Image.open(os.path.join(HERE, '..', 'ref', 'bc_1.png')).convert('RGBA')  # 8x8 tiles, 6 cols x 2 rows
 
 def tile_to_index_grid(img, tx, ty, size=16):
     """将图块转为 索引字符网格；颜色->字母映射按出现顺序"""
@@ -77,5 +79,5 @@ add("spawn1", 3, 16)
 add("spawn2", 4, 16)
 add("spawn3", 5, 16)
 
-json.dump(out, open('../sprites.json', 'w'), separators=(',', ':'))
+json.dump(out, open(os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'sprites.json'), 'w'), separators=(',', ':'))
 print("OK sprites.json:", len(json.dumps(out)), "bytes")

@@ -1,9 +1,12 @@
 #!/usr/bin/env python3
 """从 sprites.json / stages.json 生成游戏用的 JS 数据文件。"""
 import json
+import os
 
-out_dir = '.'
-sprites = json.load(open('../sprites.json'))
+HERE = os.path.dirname(os.path.abspath(__file__))
+
+out_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..')
+sprites = json.load(open(os.path.join(HERE, '..', 'sprites.json')))
 
 # ---- 生成 sprites.js ----
 # 颜色统一成游戏内可换色的调色板槽位：
@@ -11,10 +14,10 @@ sprites = json.load(open('../sprites.json'))
 js = []
 js.append("// 自动生成：精灵数据。格式: {name: {rows: [16行字符串], pal: {char: [r,g,b]}}}")
 js.append("const SPRITE_DATA = " + json.dumps(sprites, separators=(',', ':')) + ";")
-open(f'{out_dir}/sprites.js', 'w').write("\n".join(js))
+open(os.path.join(out_dir, 'sprites.js'), 'w').write("\n".join(js))
 
 # ---- 生成 stages.js ----
-stages = json.load(open('../ref/stages.json'))
+stages = json.load(open(os.path.join(HERE, '..', 'ref', 'stages.json')))
 # 关卡地图：26x26 半格 -> 13x13 瓦片（带子砖掩码）
 def convert_map(grid26):
     tiles = []
@@ -52,5 +55,5 @@ out = {"stages": {}, "enemies": {}}
 for k in stages['stages']:
     out['stages'][k] = convert_map(stages['stages'][k])
 out['enemies'] = stages['enemies']
-open(f'{out_dir}/stages.js', 'w').write("const STAGE_DATA = " + json.dumps(out, separators=(',', ':')) + ";")
+open(os.path.join(out_dir, 'stages.js'), 'w').write("const STAGE_DATA = " + json.dumps(out, separators=(',', ':')) + ";")
 print("built sprites.js + stages.js")
