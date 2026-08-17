@@ -1,6 +1,11 @@
-# 坦克大战（Battle City 风格 HTML5 复刻）
+# 🎮 坦克大战（Battle City）— HTML5 像素级复刻
 
 红白机《坦克大战》(Battle City, 1985 Namco) 的网页复刻版。单文件 HTML5 + Canvas，像素级还原原版观感与玩法。
+
+![标题画面](shots/FINAL_title.png)
+![游戏画面](shots/FINAL_play.png)
+![选关画面](shots/final_select.png)
+![施工模式](shots/construct.png)
 
 ## 运行方式
 
